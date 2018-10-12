@@ -2,9 +2,10 @@ package sudoku.solver;
 
 public class SudokuSolver {
     private int[][] board;
-    private static final int EMPTY = 0;
-    private static final int SIZE = 9;
 
+    private static final int EMPTY = 0;
+
+    private static final int SIZE = 9;
     public SudokuSolver(int[][] board) {
         this.board = board;
     }
@@ -63,13 +64,35 @@ public class SudokuSolver {
         return true;
     }
 
+    public boolean isSolve(int[][] board) {
+        boolean answer = true;
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE; col++) {
+
+                if (board[row][col] != EMPTY){
+                    if (isOk(row, col, board[row][col])){
+                        answer = true;
+                    }
+                } else {
+                    answer = false;
+                }
+            }
+        }
+        return answer;
+    }
+
+    public int[][] getBoard() {
+        return board;
+    }
+
     public void display() {
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                System.out.print("|"+ board[i][j]);
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE; col++) {
+                System.out.print("|" + board[row][col]);
             }
             System.out.println();
         }
         System.out.println();
     }
+
 }

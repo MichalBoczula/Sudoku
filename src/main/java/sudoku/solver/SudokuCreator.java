@@ -1,13 +1,15 @@
 package sudoku.solver;
 
-public class SudokuCreator {
+public class SudokuCreator implements Cloneable {
     private int[][] board = new int[9][9];
+    private int[][] unsolvedBoard;
     private static final int SIZE = 9;
     private RandomNumber randomNumber = new RandomNumber();
 
-    public SudokuCreator() {
+    public SudokuCreator() throws CloneNotSupportedException {
         createEmptySudokuBoard();
         createSudokuBoard();
+        unsolvedBoard = deepClone();
     }
 
     private boolean isInRow(int row, int number) {
@@ -50,6 +52,16 @@ public class SudokuCreator {
         }
     }
 
+    private int[][] deepClone() throws CloneNotSupportedException {
+        int[][] cloneBoard = new int[9][9];
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++){
+                cloneBoard[row][col]= board[row][col];
+            }
+        }
+        return cloneBoard;
+    }
+
     private void createSudokuBoard() {
         int end = 0;
         do {
@@ -63,13 +75,28 @@ public class SudokuCreator {
                         }
                     }
                     end++;
-                    System.out.println("row: " + row + ", col: " + col);
                 }
             }
         } while (end < 80);
     }
 
     public int[][] getBoard() {
-        return board;
+        int[][] boardToReturn = board.clone();
+        return boardToReturn;
+    }
+
+    public int[][] getUnsolvedSudoku() {
+        return unsolvedBoard;
+    }
+
+
+    public void display() {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                System.out.print("|" + board[i][j]);
+            }
+            System.out.println();
+        }
+        System.out.println();
     }
 }
