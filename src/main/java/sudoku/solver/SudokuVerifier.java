@@ -5,22 +5,14 @@ public class SudokuVerifier {
     private SudokuSolver sudokuSolver;
 
     public SudokuVerifier() {
-        try {
-            this.sudokuCreator = new SudokuCreator();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        this.sudokuCreator = new SudokuCreator();
         this.sudokuSolver = new SudokuSolver(sudokuCreator.getBoard());
         verifyCanSudokuBeSolved();
     }
 
     private void verifyCanSudokuBeSolved() {
         if (!sudokuSolver.solve()) {
-            try {
-                this.sudokuCreator = new SudokuCreator();
-            } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
-            }
+            this.sudokuCreator = new SudokuCreator();
             this.sudokuSolver = new SudokuSolver(sudokuCreator.getBoard());
             verifyCanSudokuBeSolved();
         }

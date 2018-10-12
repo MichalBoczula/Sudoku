@@ -1,12 +1,12 @@
 package sudoku.solver;
 
 public class SudokuCreator implements Cloneable {
-    private int[][] board = new int[9][9];
-    private int[][] unsolvedBoard;
     private static final int SIZE = 9;
+    private int[][] board = new int[SIZE][SIZE];
+    private int[][] unsolvedBoard;
     private RandomNumber randomNumber = new RandomNumber();
 
-    public SudokuCreator() throws CloneNotSupportedException {
+    public SudokuCreator() {
         createEmptySudokuBoard();
         createSudokuBoard();
         unsolvedBoard = deepClone();
@@ -52,11 +52,11 @@ public class SudokuCreator implements Cloneable {
         }
     }
 
-    private int[][] deepClone() throws CloneNotSupportedException {
-        int[][] cloneBoard = new int[9][9];
-        for (int row = 0; row < 9; row++) {
-            for (int col = 0; col < 9; col++){
-                cloneBoard[row][col]= board[row][col];
+    private int[][] deepClone() {
+        int[][] cloneBoard = new int[SIZE][SIZE];
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE; col++) {
+                cloneBoard[row][col] = board[row][col];
             }
         }
         return cloneBoard;

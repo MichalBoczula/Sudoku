@@ -2,10 +2,9 @@ package sudoku.solver;
 
 public class SudokuSolver {
     private int[][] board;
-
     private static final int EMPTY = 0;
-
     private static final int SIZE = 9;
+
     public SudokuSolver(int[][] board) {
         this.board = board;
     }
@@ -69,8 +68,8 @@ public class SudokuSolver {
         for (int row = 0; row < SIZE; row++) {
             for (int col = 0; col < SIZE; col++) {
 
-                if (board[row][col] != EMPTY){
-                    if (isOk(row, col, board[row][col])){
+                if (board[row][col] != EMPTY) {
+                    if (isOk(row, col, board[row][col])) {
                         answer = true;
                     }
                 } else {
