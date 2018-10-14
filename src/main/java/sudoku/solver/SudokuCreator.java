@@ -1,15 +1,20 @@
 package sudoku.solver;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SudokuCreator implements Cloneable {
     private static final int SIZE = 9;
     private int[][] board = new int[SIZE][SIZE];
     private int[][] unsolvedBoard;
     private RandomNumber randomNumber = new RandomNumber();
+    private List<String> fields = new ArrayList<>();
 
     public SudokuCreator() {
         createEmptySudokuBoard();
         createSudokuBoard();
         unsolvedBoard = deepClone();
+        putOccupiedFieldsIntoMap();
     }
 
     private boolean isInRow(int row, int number) {
@@ -80,6 +85,17 @@ public class SudokuCreator implements Cloneable {
         } while (end < 80);
     }
 
+    private void putOccupiedFieldsIntoMap() {
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE; col++){
+                if (unsolvedBoard[row][col] != 0){
+                    String string = String.valueOf(row) + String.valueOf(col);
+                    fields.add(string);
+                }
+            }
+        }
+    }
+
     public int[][] getBoard() {
         int[][] boardToReturn = board.clone();
         return boardToReturn;
@@ -89,14 +105,7 @@ public class SudokuCreator implements Cloneable {
         return unsolvedBoard;
     }
 
-
-    public void display() {
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                System.out.print("|" + board[i][j]);
-            }
-            System.out.println();
-        }
-        System.out.println();
+    public List<String> getFields() {
+        return fields;
     }
 }
