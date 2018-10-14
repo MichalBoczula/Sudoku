@@ -1,5 +1,7 @@
 package sudoku.solver;
 
+import com.google.common.primitives.Ints;
+
 public class SudokuInputVerifier {
     private SudokuInput sudokuInput = new SudokuInput();
 
@@ -8,7 +10,7 @@ public class SudokuInputVerifier {
                 "\nhint for help " +
                 "\nsudoku for solve puzzle " +
                 "\nexit for end game");
-        String input = sudokuInput.getNextString();
+        String input = sudokuInput.getNextString().trim();
         String answer = inputController(input);
         return answer != "error" ?
                 answer :
@@ -24,12 +26,11 @@ public class SudokuInputVerifier {
     }
 
     private boolean verifyInputIsNumber(String input) {
-        try {
-            Integer.parseInt(input);
-        } catch (NumberFormatException e) {
+        if(Ints.tryParse(input) != null){
+            return true;
+        } else {
             return false;
         }
-        return true;
     }
 
     private String inputController(String input) {
