@@ -43,7 +43,7 @@ public class SudokuGame {
     private boolean isEnd(String string) {
         switch (string) {
             case "sudoku":
-                isMatch();
+//                isMatch();
                 sudokuSolver.solve();
                 return true;
             case "hint":
@@ -93,12 +93,13 @@ public class SudokuGame {
     private boolean findNumberToInput(String row, String col) {
         boolean answer = false;
         int number = 1;
-        while (number <= 9 || answer == false) {
+        while (number <= 9 || !answer) {
             if (sudokuSolver.isOk(
                     Integer.parseInt(row),
                     Integer.parseInt(col),
                     number
-            )) {
+            )
+                    ) {
                 board[Integer.parseInt(row)][Integer.parseInt(col)] = number;
                 answer = true;
             } else {
@@ -108,13 +109,13 @@ public class SudokuGame {
         return answer;
     }
 
-    private void isMatch() {
-        for (int row = 0; row < 9; row++) {
-            for (int col = 0; col < 9; col++) {
-                if (!sudokuSolver.isOk(row, col, board[row][col]) && !occupiedFields.contains(row + col)){
-                    board[row][col] = 0;
-                }
-            }
-        }
-    }
+//    private void isMatch() {
+//        for (int row = 0; row < 9; row++) {
+//            for (int col = 0; col < 9; col++) {
+//                if (!sudokuSolver.isOk(row, col, board[row][col]) && !occupiedFields.contains(row + col)) {
+//                    board[row][col] = 0;
+//                }
+//            }
+//        }
+//    }
 }
