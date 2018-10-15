@@ -7,14 +7,15 @@ import java.util.stream.Collectors;
 public class SudokuVerifier {
     private SudokuCreator sudokuCreator;
     private SudokuSolver sudokuSolver;
-    private List<String> occupiedRows = new ArrayList<>();
-    private List<String> occupiedCols = new ArrayList<>();
+    private List<String> occupiedFields = new ArrayList<>();
+    private List<String> playFields = new ArrayList<>();
 
     public SudokuVerifier() {
         this.sudokuCreator = new SudokuCreator();
         this.sudokuSolver = new SudokuSolver(sudokuCreator.getBoard());
         verifyCanSudokuBeSolved();
-        getOccupiedRowsAndCols();
+        setOccupiedFields();
+        setPlayFields();
     }
 
     private void verifyCanSudokuBeSolved() {
@@ -25,28 +26,24 @@ public class SudokuVerifier {
         }
     }
 
-    public void getOccupiedRowsAndCols() {
-        occupiedRows = sudokuCreator.getFields().stream()
-                .map(s -> s.substring(0,1))
-                .collect(Collectors.toList());
-        occupiedCols = sudokuCreator.getFields().stream()
-                .map(s -> s.substring(1))
-                .collect(Collectors.toList());
+    private void setOccupiedFields(){
+        occupiedFields = sudokuCreator.getOccupiedFields();
     }
 
-    public int[][] getSudokuSolved() {
-        return sudokuSolver.getBoard();
+    public void setPlayFields() {
+        playFields = sudokuCreator.getPlayFields();
+    }
+
+    public List<String> getOccupiedFields() {
+        return occupiedFields.stream().collect(Collectors.toList());
+    }
+
+    public List<String> getPlayFields() {
+        return playFields;
     }
 
     public int[][] getSudokuUnsolved() {
         return sudokuCreator.getUnsolvedSudoku();
     }
 
-    public List<String> getOccupiedRows() {
-        return occupiedRows;
-    }
-
-    public List<String> getOccupiedCols() {
-        return occupiedCols;
-    }
 }

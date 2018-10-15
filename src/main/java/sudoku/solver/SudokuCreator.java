@@ -8,7 +8,8 @@ public class SudokuCreator implements Cloneable {
     private int[][] board = new int[SIZE][SIZE];
     private int[][] unsolvedBoard;
     private RandomNumber randomNumber = new RandomNumber();
-    private List<String> fields = new ArrayList<>();
+    private List<String> occupiedFields = new ArrayList<>();
+    private List<String> playFields = new ArrayList<>();
 
     public SudokuCreator() {
         createEmptySudokuBoard();
@@ -90,7 +91,10 @@ public class SudokuCreator implements Cloneable {
             for (int col = 0; col < SIZE; col++){
                 if (unsolvedBoard[row][col] != 0){
                     String string = String.valueOf(row) + String.valueOf(col);
-                    fields.add(string);
+                    occupiedFields.add(string);
+                } else if (unsolvedBoard[row][col] == 0){
+                    String string = String.valueOf(row) + String.valueOf(col);
+                    playFields.add(string);
                 }
             }
         }
@@ -105,7 +109,11 @@ public class SudokuCreator implements Cloneable {
         return unsolvedBoard;
     }
 
-    public List<String> getFields() {
-        return fields;
+    public List<String> getOccupiedFields() {
+        return occupiedFields;
+    }
+
+    public List<String> getPlayFields() {
+        return playFields;
     }
 }

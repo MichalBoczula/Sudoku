@@ -6,10 +6,6 @@ public class SudokuInputVerifier {
     private SudokuInput sudokuInput = new SudokuInput();
 
     public String verifyInput() {
-        System.out.println("input number from 1 to 9 or " +
-                "\nhint for help " +
-                "\nsudoku for solve puzzle " +
-                "\nexit for end game");
         String input = sudokuInput.getNextString().trim();
         String answer = inputController(input);
         return answer != "error" ?
@@ -49,8 +45,15 @@ public class SudokuInputVerifier {
         } else if (input.trim().toLowerCase().equals("exit")) {
             return "exit";
         } else {
+            message();
             return "error";
         }
     }
 
+    private void message(){
+        System.out.println("You can choose number from 1 to 9 or choose one from this options" +
+                "\nsudoku to solve puzzle" +
+                "\nhint to got help" +
+                "\nexit to end game");
+    }
 }

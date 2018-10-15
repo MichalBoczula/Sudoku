@@ -41,6 +41,10 @@ public class SudokuSolver {
         return !isInRow(row, number) && !isInCol(col, number) && !isInBox(row, col, number);
     }
 
+    public boolean hintIsOk(int row, int col, int number) {
+        return !isInRow(row, number) && !isInCol(col, number) && !isInBox(row, col, number);
+    }
+
     public boolean solve() {
         for (int row = 0; row < SIZE; row++) {
             for (int col = 0; col < SIZE; col++) {

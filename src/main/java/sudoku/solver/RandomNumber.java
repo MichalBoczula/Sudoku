@@ -13,4 +13,7 @@ public class RandomNumber {
         return random.nextInt(9)+1;
     }
 
+    public int getNextIntToHint(int size){
+        return random.nextInt(size);
+    }
 }
