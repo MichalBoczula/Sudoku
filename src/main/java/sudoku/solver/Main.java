@@ -5,5 +5,4 @@ public class Main {
         SudokuGame sudokuGame = new SudokuGame();
         sudokuGame.game();
     }
-
 }

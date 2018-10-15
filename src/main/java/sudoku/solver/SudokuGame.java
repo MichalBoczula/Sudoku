@@ -70,23 +70,40 @@ public class SudokuGame {
         return occupiedFields.contains(toCompare);
     }
 
-    public void hint() {
+    private void hint() {
         int number = randomNumber.getNextInt();
         String rowAndCol = playFields.get(randomNumber.getNextIntToHint(playFields.size()));
         String row = rowAndCol.substring(0, 1);
-        System.out.println(row);
         String col = rowAndCol.substring(1);
-        System.out.println(col);
         if (sudokuSolver.hintIsOk(
                 Integer.parseInt(row),
                 Integer.parseInt(col),
                 number
         )) {
             board[Integer.parseInt(row)][Integer.parseInt(col)] = number;
-            System.out.println("In row: " + row + " col: " + col + " was input number: " + number+"\n");
+            System.out.println("In row: " + row + " col: " + col + " was input number: " + number + "\n");
         } else {
-            hint();
+            if (!findNumberToInput(row, col)) {
+                hint();
+            }
         }
     }
 
+    private boolean findNumberToInput(String row, String col) {
+        boolean answer = false;
+        int number = 1;
+        while (number <= 9 || answer == false) {
+            if (sudokuSolver.hintIsOk(
+                    Integer.parseInt(row),
+                    Integer.parseInt(col),
+                    number
+            )) {
+                board[Integer.parseInt(row)][Integer.parseInt(col)] = number;
+                answer = true;
+            } else {
+                number++;
+            }
+        }
+        return answer;
+    }
 }
