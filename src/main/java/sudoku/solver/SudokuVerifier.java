@@ -30,7 +30,7 @@ public class SudokuVerifier {
         occupiedFields = sudokuCreator.getOccupiedFields();
     }
 
-    public void setPlayFields() {
+    private void setPlayFields() {
         playFields = sudokuCreator.getPlayFields();
     }
 
@@ -39,11 +39,12 @@ public class SudokuVerifier {
     }
 
     public List<String> getPlayFields() {
-        return playFields;
+        return playFields.stream().collect(Collectors.toList());
     }
 
     public int[][] getSudokuUnsolved() {
         return sudokuCreator.getUnsolvedSudoku();
     }
+
 
 }

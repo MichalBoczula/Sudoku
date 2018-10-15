@@ -37,11 +37,7 @@ public class SudokuSolver {
         return false;
     }
 
-    private boolean isOk(int row, int col, int number) {
-        return !isInRow(row, number) && !isInCol(col, number) && !isInBox(row, col, number);
-    }
-
-    public boolean hintIsOk(int row, int col, int number) {
+    public boolean isOk(int row, int col, int number) {
         return !isInRow(row, number) && !isInCol(col, number) && !isInBox(row, col, number);
     }
 
