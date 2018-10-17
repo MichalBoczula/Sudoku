@@ -3,6 +3,7 @@ package sudoku.solver;
 import java.util.List;
 
 public class SudokuGame {
+    private SudokuPrintColour sudokuPrintColour = new SudokuPrintColour();
     private SudokuVerifier sudokuVerifier = new SudokuVerifier();
     private SudokuInputVerifier sudokuInputVerifier = new SudokuInputVerifier();
     private int[][] board = sudokuVerifier.getSudokuUnsolved();
@@ -13,27 +14,40 @@ public class SudokuGame {
 
     public void game() {
         do {
-            System.out.println("choose number form 1 to 9 to choose field in board\n" +
+            System.out.println("choose number form 0 to 8 to choose field in board\n" +
                     "and choose number from 1 to 9 to put into sudoku board");
             display(board);
             System.out.println("give row number or:" +
                     "\nwrite sudoku to solve puzzle" +
                     "\nwrite hint to got help" +
                     "\nwrite exit to end game");
-            String row = sudokuInputVerifier.verifyInput();
+            String row = sudokuInputVerifier.verifyRowAndColInput();
             if (isEnd(row)) {
                 break;
             }
             if (!row.equals("hint")) {
                 System.out.println("give col number");
-                String col = sudokuInputVerifier.verifyInput();
+                String col = sudokuInputVerifier.verifyRowAndColInput();
                 System.out.println("give number to input");
                 String number = sudokuInputVerifier.verifyInput();
                 if (!checkIsFieldEmpty(row, col)) {
-                    board[Integer.parseInt(row) - 1][Integer.parseInt(col) - 1] = Integer.parseInt(number);
+                    board[Integer.parseInt(row)][Integer.parseInt(col)] = Integer.parseInt(number);
                     playFields.remove(row + col);
+                    System.out.println(SudokuPrintColour.ANSI_GREEN);
+                    System.out.println("\nInput in row: " + row + " col: " + col + " was input number: " + number + "\n");
+                    System.out.println(SudokuPrintColour.ANSI_RESET);
+                    if (sudokuSolver.isOk(
+                            Integer.parseInt(row),
+                            Integer.parseInt(col),
+                            Integer.parseInt(number))) {
+                        occupiedFields.add(
+                                String.valueOf(row) + String.valueOf(col)
+                        );
+                    }
                 } else {
+                    System.out.println(SudokuPrintColour.ANSI_RED);
                     System.out.println("Sorry this field is occupied pls choose another one");
+                    System.out.println(SudokuPrintColour.ANSI_RESET);
                 }
             }
         } while (!sudokuSolver.isSolve(board));
@@ -43,8 +57,7 @@ public class SudokuGame {
     private boolean isEnd(String string) {
         switch (string) {
             case "sudoku":
-//                isMatch();
-                sudokuSolver.solve();
+                canBeSolved();
                 return true;
             case "hint":
                 hint();
@@ -82,7 +95,10 @@ public class SudokuGame {
                 number
         )) {
             board[Integer.parseInt(row)][Integer.parseInt(col)] = number;
-            System.out.println("In row: " + row + " col: " + col + " was input number: " + number + "\n");
+            occupiedFields.add(String.valueOf(row) + String.valueOf(col));
+            System.out.println(SudokuPrintColour.ANSI_GREEN);
+            System.out.println("Input in row: " + row + " col: " + col + " was input number: " + number + "");
+            System.out.println(SudokuPrintColour.ANSI_RESET);
         } else {
             if (!findNumberToInput(row, col)) {
                 hint();
@@ -109,13 +125,22 @@ public class SudokuGame {
         return answer;
     }
 
-//    private void isMatch() {
-//        for (int row = 0; row < 9; row++) {
-//            for (int col = 0; col < 9; col++) {
-//                if (!sudokuSolver.isOk(row, col, board[row][col]) && !occupiedFields.contains(row + col)) {
-//                    board[row][col] = 0;
-//                }
-//            }
-//        }
-//    }
+    private void canBeSolved() {
+        sudokuSolver.isSolve(board);
+        if (!sudokuSolver.isSolve(board)) {
+            for (int row = 0; row < 9; row++) {
+                for (int col = 0; col < 9; col++) {
+                    if (!occupiedFields.contains(
+                            String.valueOf(row) + String.valueOf(col))) {
+                        board[row][col] = 0;
+                    }
+                }
+            }
+        }
+        sudokuSolver.solve();
+        if (!sudokuSolver.isSolve(board)) {
+            canBeSolved();
+        }
+    }
 }
+

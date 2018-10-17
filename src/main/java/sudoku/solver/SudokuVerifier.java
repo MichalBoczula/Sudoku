@@ -2,7 +2,6 @@ package sudoku.solver;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class SudokuVerifier {
     private SudokuCreator sudokuCreator;
@@ -35,16 +34,14 @@ public class SudokuVerifier {
     }
 
     public List<String> getOccupiedFields() {
-        return occupiedFields.stream().collect(Collectors.toList());
+        return new ArrayList<>(occupiedFields);
     }
 
     public List<String> getPlayFields() {
-        return playFields.stream().collect(Collectors.toList());
+        return new ArrayList<>(playFields);
     }
 
     public int[][] getSudokuUnsolved() {
         return sudokuCreator.getUnsolvedSudoku();
     }
-
-
 }
